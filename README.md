@@ -6,7 +6,7 @@
 
 ## Clone the repository
 ```
-git clone https://github.com/sse-aggregator/streamaggregator.git
+git clone https://github.com/omkardeshpande8/sse-aggregator.git
 ```
 
 ## Build the jar and download dependencies
