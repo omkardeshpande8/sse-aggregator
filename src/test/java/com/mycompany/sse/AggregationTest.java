@@ -15,7 +15,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class DriverTest {
+public class AggregationTest {
 
     private BufferWrapper bufferWrapper;
 
@@ -51,6 +51,9 @@ public class DriverTest {
         assertEquals(bufferWrapper.getSize(), 0);
     }
 
+    /**
+     * Test the error records are filtered out
+     */
     @Test
     @DisplayName("Filter out test")
     public void TestFiltering() {
