@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class AggregationTest {
 
@@ -68,4 +69,16 @@ public class AggregationTest {
                 .reduce(0, Integer::sum), 3596);
     }
 
+    /**
+     * Test empty buffer. The aggregator should not error out.
+     */
+    @Test
+    @DisplayName("Test empty buffer")
+    public void TestEmpty() {
+        BufferWrapper bw = new BufferWrapper(10, false);
+        EventAggregator aggregator = new EventAggregator(bw);
+        Map<GroupingKey, Integer> aggregate = aggregator.aggregate();
+
+        assertNull(aggregate);
+    }
 }

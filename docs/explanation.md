@@ -1,7 +1,8 @@
 ### Assumptions
 1. The 1-second window interval is for the processing time, not event time.
 2. The windowing strategy is fixed/tumbling windowing.  
-3. Although not explicitly listed, using akka streams is also not allowed, since it is also a stream processing framework.
+3. Although not explicitly listed, using any implementation of reactive streams like 
+   akka streams is also not allowed, since it is also a stream processing framework.
 
 ### Design
 There are 3 main components
