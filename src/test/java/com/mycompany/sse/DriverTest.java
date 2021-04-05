@@ -1,6 +1,5 @@
 package com.mycompany.sse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.sse.aggregate.EventAggregator;
 import com.mycompany.sse.bean.GroupingKey;
 import com.mycompany.sse.buffer.BufferWrapper;
@@ -14,6 +13,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class DriverTest {
 
@@ -27,7 +27,6 @@ public class DriverTest {
     @BeforeEach
     public void setUp() throws IOException {
         String path = "src/test/resources/data.txt";
-        ObjectMapper objectMapper = new ObjectMapper();
         bufferWrapper = new BufferWrapper(Integer.MAX_VALUE, false);
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -44,11 +43,26 @@ public class DriverTest {
     @DisplayName("Correctness test")
     public void TestCorrectNess() {
         assertEquals(bufferWrapper.getSize(), 3596);
+
         EventAggregator aggregator = new EventAggregator(bufferWrapper);
         Map<GroupingKey, Integer> aggregate = aggregator.aggregate();
+
         assertEquals(aggregate.get(new GroupingKey("xbox_360", "narcos", "CA")), 8);
         assertEquals(bufferWrapper.getSize(), 0);
+    }
 
+    @Test
+    @DisplayName("Filter out test")
+    public void TestFiltering() {
+        EventAggregator aggregator = new EventAggregator(bufferWrapper);
+        Map<GroupingKey, Integer> aggregate = aggregator.aggregate();
+
+        // test if "sev":"error" records get filtered out
+        assertNotEquals(aggregate.get(new GroupingKey("ps3", "orange is the new black", "IND")), 16);
+        assertNotEquals(aggregate.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .reduce(0, Integer::sum), 3596);
     }
 
 }
