@@ -34,7 +34,8 @@ public class BufferWrapper {
      * Constructor
      *
      * @param limit                 size of the buffer
-     * @param isBackpressureEnabled Backpressure enabled. Used to decide whether to lock the buffer while calculating aggregates
+     * @param isBackpressureEnabled Backpressure enabled.
+     *                              Used to decide whether to lock the buffer while calculating aggregates
      */
     public BufferWrapper(int limit, boolean isBackpressureEnabled) {
         this.buffer = new LinkedBlockingQueue<>(limit);

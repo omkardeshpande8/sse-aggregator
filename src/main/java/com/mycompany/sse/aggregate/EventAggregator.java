@@ -23,9 +23,17 @@ public class EventAggregator {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(EventAggregator.class);
 
+    /**
+     * Buffer wrapper from which the events are consumed
+     */
     private final BufferWrapper bufferWrapper;
 
 
+    /**
+     * Constructor
+     *
+     * @param bufferWrapper buffer wrapper shared with the event source
+     */
     public EventAggregator(BufferWrapper bufferWrapper) {
         this.bufferWrapper = bufferWrapper;
     }
@@ -44,9 +52,10 @@ public class EventAggregator {
     }
 
     /**
-     * Aggregate buffer
+     * First, poll/drain the current buffer to a temp list and
+     * generate counts by the grouping key from this list.
      *
-     * @return map of key used for grouping and count
+     * @return Map<GroupingKey, Integer> grouping key and count is value
      */
     public Map<GroupingKey, Integer> aggregate() {
         List<Event> tempBuffer = bufferWrapper.pollCurrentBuffer();
@@ -57,7 +66,7 @@ public class EventAggregator {
     }
 
     /**
-     * Generates counts by the grouping key for the events in the buffer
+     * Generates counts by the grouping key for the events in the input list
      *
      * @param events list of events
      * @return Map<GroupingKey, Integer> grouping key and count is value
@@ -71,7 +80,10 @@ public class EventAggregator {
     }
 
     /**
-     * Print size of buffer
+     * Print size of buffer and processed size.
+     * Buffer will always be empty when backpressure is enabled.
+     *
+     * @param processedSize number of processed records
      */
     private void printBufferStats(int processedSize) {
         LOGGER.info("Processed events: {}, buffer size:{} ", processedSize, bufferWrapper.getSize());

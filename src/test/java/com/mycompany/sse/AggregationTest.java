@@ -47,7 +47,8 @@ public class AggregationTest {
         EventAggregator aggregator = new EventAggregator(bufferWrapper);
         Map<GroupingKey, Integer> aggregate = aggregator.aggregate();
 
-        assertEquals(aggregate.get(new GroupingKey("xbox_360", "narcos", "CA")), 8);
+        assertEquals(aggregate.get(new GroupingKey
+                ("xbox_360", "narcos", "CA")), 8);
         assertEquals(bufferWrapper.getSize(), 0);
     }
 
@@ -61,10 +62,9 @@ public class AggregationTest {
         Map<GroupingKey, Integer> aggregate = aggregator.aggregate();
 
         // test if "sev":"error" records get filtered out
-        assertNotEquals(aggregate.get(new GroupingKey("ps3", "orange is the new black", "IND")), 16);
-        assertNotEquals(aggregate.entrySet()
-                .stream()
-                .map(Map.Entry::getValue)
+        assertNotEquals(aggregate.get(new GroupingKey
+                ("ps3", "orange is the new black", "IND")), 16);
+        assertNotEquals(aggregate.values().stream()
                 .reduce(0, Integer::sum), 3596);
     }
 

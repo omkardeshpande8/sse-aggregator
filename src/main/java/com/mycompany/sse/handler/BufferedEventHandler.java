@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Event handler implementation that reads events from text/eventstream and adds it to the buffer
+ * Event handler implementation that reads events from text/event-stream and adds it to the buffer
  */
 public class BufferedEventHandler implements EventHandler {
 
@@ -15,14 +15,16 @@ public class BufferedEventHandler implements EventHandler {
      * Logger for the class
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(BufferedEventHandler.class);
+
     /**
-     * Buffer wrapper
+     * Buffer wrapper to which events are added
      */
     private final BufferWrapper bufferWrapper;
 
     /**
      * Constructor
-     * @param bufferWrapper instance of buffer wrapper
+     *
+     * @param bufferWrapper instance of buffer wrapper shared with event aggregator
      */
     public BufferedEventHandler(BufferWrapper bufferWrapper) {
         this.bufferWrapper = bufferWrapper;

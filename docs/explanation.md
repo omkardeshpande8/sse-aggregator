@@ -20,4 +20,4 @@ There are two ways to apply backpressure -
    then we won't read any more events till the buffer is freed up by the consumer.
 2. Don't read records while calculating aggregates - This will also limit the number of records read into the buffer. 
    If we get a sudden influx of data, then time to calculate aggregates will increase. And for the next second we might have even more records to process.
-   This might have a snowball effect. This is turned off by default, because it requires locking on the buffer.
+   This might have a snowball effect. This is turned off by default. It can be configured otherwise using the properties file

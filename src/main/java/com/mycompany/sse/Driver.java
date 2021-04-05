@@ -71,6 +71,7 @@ public class Driver {
         boolean backPressure = Boolean.parseBoolean(properties.getProperty(BACKPRESSURE_ENABLED, Boolean.toString(Boolean.FALSE)));
         int maxSize = Integer.parseInt(properties.getProperty(MAX_SIZE, Integer.toString(Integer.MAX_VALUE)));
 
+        // Instantiate event aggregator and scheduled executor service
         BufferWrapper bufferWrapper = new BufferWrapper(maxSize, backPressure);
         EventAggregator eventAggregator = new EventAggregator(bufferWrapper);
         ScheduledExecutorService scheduledExecutorService =
