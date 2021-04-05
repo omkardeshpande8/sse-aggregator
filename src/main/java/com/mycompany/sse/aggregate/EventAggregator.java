@@ -60,8 +60,11 @@ public class EventAggregator {
     public Map<GroupingKey, Integer> aggregate() {
         List<Event> tempBuffer = bufferWrapper.pollCurrentBuffer();
 
-        Map<GroupingKey, Integer> map = getCounts(tempBuffer);
-        printBufferStats(tempBuffer.size());
+        Map<GroupingKey, Integer> map = null;
+        if(!tempBuffer.isEmpty()) {
+            map = getCounts(tempBuffer);
+            printBufferStats(tempBuffer.size());
+        }
         return map;
     }
 
